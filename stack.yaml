@@ -1,0 +1,12 @@
+resolver: lts-3.6
+
+flags: {}
+
+packages:
+  - '.'
+  - haskoin
+  - network-bitcoin
+
+extra-deps:
+    - murmur3-1.0.0
+    - pbkdf-1.1.1.1
