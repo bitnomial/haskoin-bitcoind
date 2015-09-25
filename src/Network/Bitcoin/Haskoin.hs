@@ -10,6 +10,9 @@ module Network.Bitcoin.Haskoin
     -- * Utility functions
     , decodeHexTx
     , hexTxHash
+
+    -- * network-bitcoin reexports
+    , getClient
     ) where
 
 import           Control.Monad               (join)
@@ -19,7 +22,8 @@ import           Data.ByteString.Base16      as B16
 import           Data.Text.Encoding          as E
 
 import           Network.Bitcoin             (Client, RawTransaction,
-                                              TransactionID, getRawTransaction)
+                                              TransactionID, getClient,
+                                              getRawTransaction)
 import qualified Network.Bitcoin             as BTC
 import           Network.Haskoin.Crypto
 import           Network.Haskoin.Script
@@ -46,7 +50,7 @@ transactionOutputAddress = join . fmap outputScriptAddress . decodeOutputBS . sc
 transactionInputAddress :: TxIn -> Either String Address
 transactionInputAddress = join . fmap inputScriptAddress . decodeInputBS . scriptInput
 
-
+-- | TODO Catch bad decodes
 decodeHexTx :: RawTransaction -> Tx
 decodeHexTx = decode' . fst . B16.decode . E.encodeUtf8
 
