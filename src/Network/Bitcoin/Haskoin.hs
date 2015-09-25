@@ -13,6 +13,7 @@ module Network.Bitcoin.Haskoin
 
     -- * network-bitcoin reexports
     , getClient
+    , Client
     ) where
 
 import           Control.Monad               (join)
@@ -24,7 +25,6 @@ import           Data.Text.Encoding          as E
 import           Network.Bitcoin             (Client, RawTransaction,
                                               TransactionID, getClient,
                                               getRawTransaction)
-import qualified Network.Bitcoin             as BTC
 import           Network.Haskoin.Crypto
 import           Network.Haskoin.Script
 import           Network.Haskoin.Transaction
