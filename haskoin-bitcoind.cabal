@@ -1,5 +1,5 @@
 name:                haskoin-bitcoind
-version:             0.1.0
+version:             0.2.0
 synopsis:            An adapter for haskoin to network-bitcoin
 -- description:         
 homepage:            haskoin.com
@@ -27,6 +27,7 @@ library
     network-bitcoin     >= 1.8.2,
     mtl                 >= 2.2,
     monad-control       >= 0.1,
+    transformers        >= 0.3,
     transformers-base   >= 0.4
   hs-source-dirs:      src
   default-language:    Haskell2010

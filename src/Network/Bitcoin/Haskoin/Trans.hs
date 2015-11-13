@@ -21,6 +21,8 @@ module Network.Bitcoin.Haskoin.Trans
     , TxIn (..)
     , MonadBase
     , liftBase
+    , MonadIO
+    , liftIO
 
     , -- * Utilities
       withClient
@@ -28,9 +30,9 @@ module Network.Bitcoin.Haskoin.Trans
     ) where
 
 import           Control.Monad.Base          (MonadBase, liftBase)
+import           Control.Monad.IO.Class
 import           Control.Monad.Reader        (MonadReader, ReaderT (..), ask)
 import           Control.Monad.Trans         (MonadTrans (..))
--- import           Control.Monad.Trans.Control
 
 import           Network.Bitcoin.Haskoin     (Client)
 import qualified Network.Bitcoin.Haskoin     as B
@@ -40,7 +42,7 @@ import           Network.Haskoin.Transaction (OutPoint, Tx (..), TxIn (..),
 
 
 newtype BitcoinT m a = BitcoinT { unBitcoinT :: ReaderT Client m a }
-    deriving (Functor, Applicative, Monad, MonadTrans, MonadReader Client)
+    deriving (Functor, Applicative, Monad, MonadTrans, MonadIO, MonadReader Client)
 
 
 instance MonadBase b m => MonadBase b (BitcoinT m) where
@@ -58,19 +60,19 @@ withClient f = do
     lift (f cl)
 
 
-withClientIO :: MonadBase IO m => (Client -> IO a) -> BitcoinT m a
+withClientIO :: MonadIO m => (Client -> IO a) -> BitcoinT m a
 withClientIO f = do
     cl <- ask
-    liftBase (f cl)
+    liftIO (f cl)
 
 
-getTransaction :: MonadBase IO m => TxHash -> BitcoinT m Tx
+getTransaction :: MonadIO m => TxHash -> BitcoinT m Tx
 getTransaction hash = withClientIO (`B.getTransaction` hash)
 
 
-getTransactionOutput :: MonadBase IO m => OutPoint -> BitcoinT m TxOut
+getTransactionOutput :: MonadIO m => OutPoint -> BitcoinT m TxOut
 getTransactionOutput op = withClientIO (`B.getTransactionOutput` op)
 
 
-outpointAddress :: MonadBase IO m => OutPoint -> BitcoinT m (Either String Address)
+outpointAddress :: MonadIO m => OutPoint -> BitcoinT m (Either String Address)
 outpointAddress op = withClientIO (`B.outpointAddress` op)
