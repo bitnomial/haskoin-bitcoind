@@ -2,6 +2,7 @@
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE MultiParamTypeClasses      #-}
+{-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE UndecidableInstances       #-}
 
 module Network.Bitcoin.Haskoin.Trans
@@ -12,6 +13,7 @@ module Network.Bitcoin.Haskoin.Trans
       getTransaction
     , getTransactionOutput
     , outpointAddress
+    , importAddress
 
     , -- * Reexports
       Tx (..)
@@ -34,6 +36,7 @@ import           Control.Monad.IO.Class
 import           Control.Monad.Reader        (MonadReader, ReaderT (..), ask)
 import           Control.Monad.Trans         (MonadTrans (..))
 
+import           Network.Bitcoin             (Account)
 import           Network.Bitcoin.Haskoin     (Client)
 import qualified Network.Bitcoin.Haskoin     as B
 import           Network.Haskoin.Crypto      (Address, TxHash)
@@ -76,3 +79,11 @@ getTransactionOutput op = withClientIO (`B.getTransactionOutput` op)
 
 outpointAddress :: MonadIO m => OutPoint -> BitcoinT m (Either String Address)
 outpointAddress op = withClientIO (`B.outpointAddress` op)
+
+
+importAddress' :: MonadIO m => Address -> Maybe Account -> Maybe Bool -> BitcoinT m ()
+importAddress' addr macct mrescan =
+    withClientIO (\cl -> B.importAddress cl addr macct mrescan)
+
+importAddress :: MonadIO m => Address -> BitcoinT m ()
+importAddress addr = importAddress' addr (Just "") (Just False)

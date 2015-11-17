@@ -6,6 +6,7 @@ module Network.Bitcoin.Haskoin
     , getTransaction
     , getTransactionOutput
     , outpointAddress
+    , importAddress
 
     -- * Utility functions
     , decodeHexTx
@@ -20,11 +21,13 @@ import           Control.Monad               (join)
 
 import           Data.ByteString             as BS
 import           Data.ByteString.Base16      as B16
+import           Data.Text                   as T
 import           Data.Text.Encoding          as E
 
 import           Network.Bitcoin             (Client, RawTransaction,
                                               TransactionID, getClient,
                                               getRawTransaction)
+import qualified Network.Bitcoin             as B
 import           Network.Haskoin.Crypto
 import           Network.Haskoin.Script
 import           Network.Haskoin.Transaction
@@ -50,6 +53,7 @@ transactionOutputAddress = join . fmap outputScriptAddress . decodeOutputBS . sc
 transactionInputAddress :: TxIn -> Either String Address
 transactionInputAddress = join . fmap inputScriptAddress . decodeInputBS . scriptInput
 
+
 -- | TODO Catch bad decodes
 decodeHexTx :: RawTransaction -> Tx
 decodeHexTx = decode' . fst . B16.decode . E.encodeUtf8
@@ -73,3 +77,7 @@ getTransactionOutput cl (OutPoint hash i) = do
 
 outpointAddress :: Client -> OutPoint -> IO (Either String Address)
 outpointAddress c op = transactionOutputAddress <$> getTransactionOutput c op
+
+
+importAddress :: Client -> Address -> Maybe B.Account -> Maybe Bool -> IO ()
+importAddress client addr = B.importAddress client (T.pack $ addrToBase58 addr)
