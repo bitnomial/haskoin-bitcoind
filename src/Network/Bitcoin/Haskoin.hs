@@ -21,7 +21,6 @@ import           Control.Monad               (join)
 
 import           Data.ByteString             as BS
 import           Data.ByteString.Base16      as B16
-import           Data.Text                   as T
 import           Data.Text.Encoding          as E
 
 import           Network.Bitcoin             (Client, RawTransaction,
@@ -60,7 +59,7 @@ decodeHexTx = decode' . fst . B16.decode . E.encodeUtf8
 
 
 hexTxHash :: TxHash -> TransactionID
-hexTxHash = E.decodeUtf8 . B16.encode . BS.reverse . encode'
+hexTxHash = E.decodeUtf8 . txHashToHex
 
 
 -- | TODO Catch errors from bitcoind
@@ -80,4 +79,4 @@ outpointAddress c op = transactionOutputAddress <$> getTransactionOutput c op
 
 
 importAddress :: Client -> Address -> Maybe B.Account -> Maybe Bool -> IO ()
-importAddress client addr = B.importAddress client (T.pack $ addrToBase58 addr)
+importAddress client addr = B.importAddress client (E.decodeUtf8 $ addrToBase58 addr)

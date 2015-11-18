@@ -39,9 +39,9 @@ import           Control.Monad.Trans         (MonadTrans (..))
 import           Network.Bitcoin             (Account)
 import           Network.Bitcoin.Haskoin     (Client)
 import qualified Network.Bitcoin.Haskoin     as B
-import           Network.Haskoin.Crypto      (Address, TxHash)
-import           Network.Haskoin.Transaction (OutPoint, Tx (..), TxIn (..),
-                                              TxOut (..))
+import           Network.Haskoin.Crypto      (Address)
+import           Network.Haskoin.Transaction (OutPoint, Tx (..), TxHash,
+                                              TxIn (..), TxOut (..))
 
 
 newtype BitcoinT m a = BitcoinT { unBitcoinT :: ReaderT Client m a }

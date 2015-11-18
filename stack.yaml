@@ -8,5 +8,7 @@ packages:
   - network-bitcoin
 
 extra-deps:
-    - murmur3-1.0.0
-    - pbkdf-1.1.1.1
+  - murmur3-1.0.0
+  - pbkdf-1.1.1.1
+  - secp256k1-0.4.2
+  - largeword-1.2.4
