@@ -19,7 +19,6 @@ module Network.Bitcoin.Haskoin
 
 import           Control.Monad               (join)
 
-import           Data.ByteString             as BS
 import           Data.ByteString.Base16      as B16
 import           Data.Text.Encoding          as E
 
