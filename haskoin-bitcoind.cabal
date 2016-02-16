@@ -7,7 +7,7 @@ license:             BSD3
 license-file:        LICENSE
 author:              Matthew Wraith
 maintainer:          wraithm@gmail.com
--- copyright:           
+copyright:           2015 Bitnomial, Inc
 category:            Network
 build-type:          Simple
 cabal-version:       >=1.10
