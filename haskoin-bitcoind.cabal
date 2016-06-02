@@ -1,5 +1,5 @@
 name:                haskoin-bitcoind
-version:             0.2.0
+version:             0.2.1
 synopsis:            An adapter for haskoin to network-bitcoin
 -- description:         
 homepage:            haskoin.com
@@ -19,7 +19,7 @@ library
   -- other-modules:       
   -- other-extensions:    OverloadedStrings
   build-depends:       
-    base                >= 4.8 && <4.9,
+    base                >= 4.8 && <4.10,
     bytestring          >= 0.10.6,
     base16-bytestring   >= 0.1.1.6,
     text                >= 1.2.1.3,
