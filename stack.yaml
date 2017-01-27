@@ -1,12 +1,12 @@
-resolver: nightly-2016-05-31
+resolver: nightly-2017-01-27
 
 flags: {}
 
 packages:
   - '.'
   - location:
-      git: git://github.com/haskoin/haskoin # formerly WraithM
-      commit: 3929cc64ff2ae2c1714720b00d7205b6451708c6
+      git: git://github.com/haskoin/haskoin
+      commit: 1b846521b8c51e721f65ef1e9803f347ef047118
     extra-dep: true
     subdirs:
       - haskoin-core
@@ -14,13 +14,9 @@ packages:
       git: git://github.com/WraithM/network-bitcoin
       commit: f623f3821e9c422e9e7fb0bff6a69435c9b37a25
     extra-dep: true
-  - location: # Until hackage gets updated
-      git: git://github.com/WraithM/murmur3
-      commit: 3effbb4f33d1da1a01018833b27f28535e82edf1
-    extra-dep: true
 
 extra-deps:
-  # - murmur3-1.0.0 # until hackage gets updated
+  - murmur3-1.0.3
   - pbkdf-1.1.1.1
   - secp256k1-0.4.2
   - largeword-1.2.4

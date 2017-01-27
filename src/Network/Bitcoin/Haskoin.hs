@@ -19,7 +19,8 @@ module Network.Bitcoin.Haskoin
 
 import           Control.Monad               (join)
 
-import           Data.ByteString.Base16      as B16
+import qualified Data.ByteString.Base16      as B16
+import           Data.Serialize              (decode)
 import           Data.Text.Encoding          as E
 
 import           Network.Bitcoin             (Client, RawTransaction,
@@ -54,7 +55,10 @@ transactionInputAddress = join . fmap inputScriptAddress . decodeInputBS . scrip
 
 -- | TODO Catch bad decodes
 decodeHexTx :: RawTransaction -> Tx
-decodeHexTx = decode' . fst . B16.decode . E.encodeUtf8
+decodeHexTx = fromRight . decode . fst . B16.decode . E.encodeUtf8
+  where
+    fromRight (Right x) = x
+    fromRight (Left e) = error e
 
 
 hexTxHash :: TxHash -> TransactionID
