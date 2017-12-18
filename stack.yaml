@@ -1,12 +1,12 @@
-resolver: nightly-2017-01-27
+resolver: nightly-2017-09-06
 
 flags: {}
 
 packages:
   - '.'
   - location:
-      git: git://github.com/haskoin/haskoin
-      commit: 1b846521b8c51e721f65ef1e9803f347ef047118
+      git: git://github.com/bitnomial/haskoin
+      commit: 509ad423e4734498e96d94fdece36ee5f0e00a05
     extra-dep: true
     subdirs:
       - haskoin-core
@@ -19,4 +19,4 @@ extra-deps:
   - murmur3-1.0.3
   - pbkdf-1.1.1.1
   - secp256k1-0.4.2
-  - largeword-1.2.4
+  - largeword-1.2.5
