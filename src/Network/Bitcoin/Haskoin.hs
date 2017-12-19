@@ -12,6 +12,7 @@ module Network.Bitcoin.Haskoin
     , addressToHex
     , decodeHexTx
     , hexTxHash
+    , hexToAddress
     , transactionIdToTxHash
 
     -- * network-bitcoin reexports
@@ -59,6 +60,10 @@ transactionInputAddress = join . fmap inputScriptAddress . decodeInputBS . scrip
 
 addressToHex :: Address -> B.Address
 addressToHex = decodeUtf8 . addrToBase58
+
+
+hexToAddress :: B.Address -> Address
+hexToAddress = fromMaybe (error "Unable to parse address") . base58ToAddr . encodeUtf8
 
 
 -- | TODO Catch bad decodes
