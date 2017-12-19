@@ -1,5 +1,5 @@
 name:                haskoin-bitcoind
-version:             0.3.0
+version:             0.2.2
 synopsis:            An adapter for haskoin to network-bitcoin
 -- description:
 homepage:            haskoin.com
