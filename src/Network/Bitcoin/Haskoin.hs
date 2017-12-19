@@ -9,8 +9,10 @@ module Network.Bitcoin.Haskoin
     , importAddress
 
     -- * Utility functions
+    , addressToHex
     , decodeHexTx
     , hexTxHash
+    , transactionIdToTxHash
 
     -- * network-bitcoin reexports
     , getClient
@@ -18,6 +20,7 @@ module Network.Bitcoin.Haskoin
     ) where
 
 import           Control.Monad               (join)
+import           Data.Maybe                  (fromMaybe)
 
 import qualified Data.ByteString.Base16      as B16
 import           Data.Serialize              (decode)
@@ -28,15 +31,16 @@ import           Network.Bitcoin             (Client, RawTransaction,
                                               getRawTransaction)
 import qualified Network.Bitcoin             as B
 import           Network.Haskoin.Crypto
+import qualified Network.Haskoin.Crypto      as HSK
 import           Network.Haskoin.Script
 import           Network.Haskoin.Transaction
 import           Network.Haskoin.Util
 
 
 outputScriptAddress :: ScriptOutput -> Either String Address
-outputScriptAddress (PayPKHash addr) = Right addr
+outputScriptAddress (PayPKHash addr)     = Right addr
 outputScriptAddress (PayScriptHash addr) = Right addr
-outputScriptAddress so = Left $ "Bad Script: " ++ show so
+outputScriptAddress so                   = Left $ "Bad Script: " ++ show so
 
 
 inputScriptAddress :: ScriptInput -> Either String Address
@@ -53,16 +57,24 @@ transactionInputAddress :: TxIn -> Either String Address
 transactionInputAddress = join . fmap inputScriptAddress . decodeInputBS . scriptInput
 
 
+addressToHex :: Address -> B.Address
+addressToHex = decodeUtf8 . addrToBase58
+
+
 -- | TODO Catch bad decodes
 decodeHexTx :: RawTransaction -> Tx
 decodeHexTx = fromRight . decode . fst . B16.decode . E.encodeUtf8
   where
     fromRight (Right x) = x
-    fromRight (Left e) = error e
+    fromRight (Left e)  = error e
 
 
 hexTxHash :: TxHash -> TransactionID
 hexTxHash = E.decodeUtf8 . txHashToHex
+
+
+transactionIdToTxHash :: TransactionID -> TxHash
+transactionIdToTxHash = fromMaybe (error "Unable to parse txid") . hexToTxHash . encodeUtf8
 
 
 -- | TODO Catch errors from bitcoind
