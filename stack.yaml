@@ -12,7 +12,7 @@ packages:
       - haskoin-core
   - location:
       git: git://github.com/WraithM/network-bitcoin
-      commit: f623f3821e9c422e9e7fb0bff6a69435c9b37a25
+      commit: f58f7ad68d8ae6601a80cff00e1937b9065184ab
     extra-dep: true
 
 extra-deps:

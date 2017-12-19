@@ -1,7 +1,7 @@
 name:                haskoin-bitcoind
-version:             0.2.1
+version:             0.3.0
 synopsis:            An adapter for haskoin to network-bitcoin
--- description:         
+-- description:
 homepage:            haskoin.com
 license:             BSD3
 license-file:        LICENSE
@@ -18,6 +18,8 @@ library
 
   exposed-modules: Network.Bitcoin.Haskoin
                  , Network.Bitcoin.Haskoin.Trans
+                 , Network.Bitcoin.Mining.Haskoin
+                 , Network.Bitcoin.Wallet.Haskoin
 
   build-depends: base                >= 4.8 && < 4.11
                , base16-bytestring   >= 0.1.1.6
