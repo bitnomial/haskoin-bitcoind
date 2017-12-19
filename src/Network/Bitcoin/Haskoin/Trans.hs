@@ -85,5 +85,6 @@ importAddress' :: MonadIO m => Address -> Maybe Account -> Maybe Bool -> Bitcoin
 importAddress' addr macct mrescan =
     withClientIO (\cl -> B.importAddress cl addr macct mrescan)
 
+
 importAddress :: MonadIO m => Address -> BitcoinT m ()
 importAddress addr = importAddress' addr (Just "") (Just False)
