@@ -1,29 +1,30 @@
 module Network.Bitcoin.Haskoin
-    ( outputScriptAddress
-    , inputScriptAddress
-    , transactionOutputAddress
+    ( transactionOutputAddress
     , transactionInputAddress
     , getTransaction
     , getTransactionOutput
     , outpointAddress
     , importAddress
 
-    -- * Utility functions
-    , addressToHex
+    , -- * Utility functions
+      addressToHex
     , decodeHexTx
     , hexTxHash
     , hexToAddress
     , transactionIdToTxHash
 
-    -- * network-bitcoin reexports
-    , getClient
+    , -- * network-bitcoin reexports
+      getClient
     , Client
+
+    , -- * haskoin Rexports
+      outputAddress
+    , inputAddress
     ) where
 
-import           Control.Monad               (join)
-import           Data.Maybe                  (fromMaybe)
-
+import           Control.Monad               ((<=<))
 import qualified Data.ByteString.Base16      as B16
+import           Data.Maybe                  (fromMaybe)
 import           Data.Serialize              (decode)
 import           Data.Text.Encoding          as E
 
@@ -31,31 +32,22 @@ import           Network.Bitcoin             (Client, RawTransaction,
                                               TransactionID, getClient,
                                               getRawTransaction)
 import qualified Network.Bitcoin             as B
-import           Network.Haskoin.Crypto
-import qualified Network.Haskoin.Crypto      as HSK
-import           Network.Haskoin.Script
-import           Network.Haskoin.Transaction
-import           Network.Haskoin.Util
-
-
-outputScriptAddress :: ScriptOutput -> Either String Address
-outputScriptAddress (PayPKHash addr)     = Right addr
-outputScriptAddress (PayScriptHash addr) = Right addr
-outputScriptAddress so                   = Left $ "Bad Script: " ++ show so
-
-
-inputScriptAddress :: ScriptInput -> Either String Address
-inputScriptAddress (RegularInput (SpendPKHash _ key)) = Right (pubKeyAddr key)
-inputScriptAddress (ScriptHashInput _ rdm) = Right (scriptAddr rdm)
-inputScriptAddress so = Left $ "Bad Script: " ++ show so
+import           Network.Haskoin.Crypto      (Address, addrToBase58,
+                                              base58ToAddr)
+import           Network.Haskoin.Script      (decodeInputBS, decodeOutputBS,
+                                              inputAddress, outputAddress)
+import           Network.Haskoin.Transaction (OutPoint (..), Tx (..), TxHash,
+                                              TxIn, TxOut, hexToTxHash,
+                                              scriptInput, scriptOutput,
+                                              txHashToHex)
 
 
 transactionOutputAddress :: TxOut -> Either String Address
-transactionOutputAddress = join . fmap outputScriptAddress . decodeOutputBS . scriptOutput
+transactionOutputAddress = outputAddress <=< decodeOutputBS . scriptOutput
 
 
 transactionInputAddress :: TxIn -> Either String Address
-transactionInputAddress = join . fmap inputScriptAddress . decodeInputBS . scriptInput
+transactionInputAddress = inputAddress <=< decodeInputBS . scriptInput
 
 
 addressToHex :: Address -> B.Address
@@ -88,10 +80,7 @@ getTransaction c hash = decodeHexTx <$> getRawTransaction c (hexTxHash hash)
 
 
 getTransactionOutput :: Client -> OutPoint -> IO TxOut
-getTransactionOutput cl (OutPoint hash i) = do
-    tx <- getTransaction cl hash
-    let txos = txOut tx
-    return $ txos !! fromIntegral i
+getTransactionOutput cl (OutPoint hash i) = (!! fromIntegral i) . txOut <$> getTransaction cl hash
 
 
 outpointAddress :: Client -> OutPoint -> IO (Either String Address)

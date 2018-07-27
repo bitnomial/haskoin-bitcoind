@@ -5,8 +5,8 @@ flags: {}
 packages:
   - '.'
   - location:
-      git: git://github.com/bitnomial/haskoin
-      commit: 509ad423e4734498e96d94fdece36ee5f0e00a05
+      git: git://github.com/haskoin/haskoin
+      commit: 3279f5c83026fe25e8761213de7e0cdcc6e2bd0e
     extra-dep: true
     subdirs:
       - haskoin-core
@@ -18,5 +18,6 @@ packages:
 extra-deps:
   - murmur3-1.0.3
   - pbkdf-1.1.1.1
-  - secp256k1-0.4.2
+  - secp256k1-0.5.2
   - largeword-1.2.5
+  - either-4.5
