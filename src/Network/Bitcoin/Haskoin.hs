@@ -32,10 +32,11 @@ import           Network.Bitcoin             (Client, RawTransaction,
                                               TransactionID, getClient,
                                               getRawTransaction)
 import qualified Network.Bitcoin             as B
-import           Network.Haskoin.Crypto      (Address, addrToBase58,
-                                              base58ToAddr)
-import           Network.Haskoin.Script      (decodeInputBS, decodeOutputBS,
-                                              inputAddress, outputAddress)
+import           Network.Haskoin.Address     (Address, addrToString,
+                                              inputAddress, outputAddress,
+                                              scriptToAddressBS, stringToAddr)
+import           Network.Haskoin.Constants   (Network)
+import           Network.Haskoin.Script      (decodeInputBS)
 import           Network.Haskoin.Transaction (OutPoint (..), Tx (..), TxHash,
                                               TxIn, TxOut, hexToTxHash,
                                               scriptInput, scriptOutput,
@@ -43,19 +44,19 @@ import           Network.Haskoin.Transaction (OutPoint (..), Tx (..), TxHash,
 
 
 transactionOutputAddress :: TxOut -> Either String Address
-transactionOutputAddress = outputAddress <=< decodeOutputBS . scriptOutput
+transactionOutputAddress = scriptToAddressBS . scriptOutput
 
 
-transactionInputAddress :: TxIn -> Either String Address
-transactionInputAddress = inputAddress <=< decodeInputBS . scriptInput
+transactionInputAddress :: Network -> TxIn -> Either String Address
+transactionInputAddress net = maybe (Left "could not decode address") Right . inputAddress <=< decodeInputBS net . scriptInput
 
 
-addressToHex :: Address -> B.Address
-addressToHex = decodeUtf8 . addrToBase58
+addressToHex :: Network -> Address -> B.Address
+addressToHex = addrToString
 
 
-hexToAddress :: B.Address -> Address
-hexToAddress = fromMaybe (error "Unable to parse address") . base58ToAddr . encodeUtf8
+hexToAddress :: Network -> B.Address -> Address
+hexToAddress net = fromMaybe (error "Unable to parse address") . stringToAddr net
 
 
 -- | TODO Catch bad decodes
@@ -67,11 +68,11 @@ decodeHexTx = fromRight . decode . fst . B16.decode . E.encodeUtf8
 
 
 hexTxHash :: TxHash -> TransactionID
-hexTxHash = E.decodeUtf8 . txHashToHex
+hexTxHash = txHashToHex
 
 
 transactionIdToTxHash :: TransactionID -> TxHash
-transactionIdToTxHash = fromMaybe (error "Unable to parse txid") . hexToTxHash . encodeUtf8
+transactionIdToTxHash = fromMaybe (error "Unable to parse txid") . hexToTxHash
 
 
 -- | TODO Catch errors from bitcoind
@@ -87,5 +88,5 @@ outpointAddress :: Client -> OutPoint -> IO (Either String Address)
 outpointAddress c op = transactionOutputAddress <$> getTransactionOutput c op
 
 
-importAddress :: Client -> Address -> Maybe B.Account -> Maybe Bool -> IO ()
-importAddress client addr = B.importAddress client (E.decodeUtf8 $ addrToBase58 addr)
+importAddress :: Client -> Network -> Address -> Maybe B.Account -> Maybe Bool -> IO ()
+importAddress client net addr = B.importAddress client (addressToHex net addr)

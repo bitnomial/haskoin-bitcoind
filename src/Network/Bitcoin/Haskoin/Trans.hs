@@ -39,11 +39,13 @@ import           Control.Monad.Trans         (MonadTrans (..))
 import           Network.Bitcoin             (Account)
 import           Network.Bitcoin.Haskoin     (Client)
 import qualified Network.Bitcoin.Haskoin     as B
-import           Network.Haskoin.Crypto      (Address)
+import           Network.Haskoin.Address     (Address)
+import           Network.Haskoin.Constants   (Network)
 import           Network.Haskoin.Transaction (OutPoint, Tx (..), TxHash,
                                               TxIn (..), TxOut (..))
 
 
+-- TODO Add Network to Reader
 newtype BitcoinT m a = BitcoinT { unBitcoinT :: ReaderT Client m a }
     deriving (Functor, Applicative, Monad, MonadTrans, MonadIO, MonadReader Client)
 
@@ -81,10 +83,10 @@ outpointAddress :: MonadIO m => OutPoint -> BitcoinT m (Either String Address)
 outpointAddress op = withClientIO (`B.outpointAddress` op)
 
 
-importAddress' :: MonadIO m => Address -> Maybe Account -> Maybe Bool -> BitcoinT m ()
-importAddress' addr macct mrescan =
-    withClientIO (\cl -> B.importAddress cl addr macct mrescan)
+importAddress' :: MonadIO m => Network -> Address -> Maybe Account -> Maybe Bool -> BitcoinT m ()
+importAddress' net addr macct mrescan =
+    withClientIO (\cl -> B.importAddress cl net addr macct mrescan)
 
 
-importAddress :: MonadIO m => Address -> BitcoinT m ()
-importAddress addr = importAddress' addr (Just "") (Just False)
+importAddress :: MonadIO m => Network -> Address -> BitcoinT m ()
+importAddress net addr = importAddress' net addr (Just "") (Just False)
