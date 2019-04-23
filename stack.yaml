@@ -6,7 +6,7 @@ packages:
   - '.'
   - location:
       git: git://github.com/haskoin/haskoin-core
-      commit: d14b988dcfd96e20ec260ff8fd2f45f288c8587f
+      commit: 1c5f0607f123d4f4361e58db082563aad5034beb
     extra-dep: true
   - location:
       git: git://github.com/bitnomial/network-bitcoin

@@ -52,7 +52,7 @@ transactionInputAddress net = maybe (Left "could not decode address") Right . in
 
 
 addressToHex :: Network -> Address -> B.Address
-addressToHex = addrToString
+addressToHex net = fromMaybe (error "Address encoding error") . addrToString net
 
 
 hexToAddress :: Network -> B.Address -> Address
