@@ -6,5 +6,4 @@ packages:
   - '.'
 
 extra-deps:
-  - git: git://github.com/bitnomial/network-bitcoin
-    commit: f58f7ad68d8ae6601a80cff00e1937b9065184ab
+  - network-bitcoin-1.9.1

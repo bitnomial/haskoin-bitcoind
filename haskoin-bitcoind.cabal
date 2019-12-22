@@ -1,12 +1,12 @@
 name:                haskoin-bitcoind
 version:             0.4.1
 synopsis:            An adapter for haskoin to network-bitcoin
--- description:
+description:         An adapter for haskoin to network-bitcoin. You can call network-bitcoin functions with haskoin types.
 homepage:            haskoin.com
 license:             BSD3
 license-file:        LICENSE
 author:              Matthew Wraith
-maintainer:          wraithm@gmail.com
+maintainer:          matt@bitnomial.com
 copyright:           2015 Bitnomial, Inc
 category:            Network
 build-type:          Simple

@@ -5,19 +5,12 @@
 
 packages:
 - completed:
-    cabal-file:
-      size: 2577
-      sha256: caf5083d12b4d9d877055a42ed4727694411ca387afd9d15de2333dc5f5ade5f
-    name: network-bitcoin
-    version: 1.8.3
-    git: git://github.com/bitnomial/network-bitcoin
+    hackage: network-bitcoin-1.9.1@sha256:f950326eef853c8ce5a15a2fc65ed0291669b60b3138538629469fbeaf447d96,2420
     pantry-tree:
-      size: 1145
-      sha256: fdc6cca4eb76b456e155ad49558d08704bc3ff2ef7194d9bf9eeb25f6d68b54a
-    commit: f58f7ad68d8ae6601a80cff00e1937b9065184ab
+      size: 851
+      sha256: 9e1136ae25b7bec92afb03dae5833946bf0596518a8c92a65c09eef7f5c4c2ac
   original:
-    git: git://github.com/bitnomial/network-bitcoin
-    commit: f58f7ad68d8ae6601a80cff00e1937b9065184ab
+    hackage: network-bitcoin-1.9.1
 snapshots:
 - completed:
     size: 524799
