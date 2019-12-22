@@ -1,20 +1,10 @@
-resolver: nightly-2018-08-08
+resolver: lts-14.17
 
 flags: {}
 
 packages:
   - '.'
-  - location:
-      git: git://github.com/haskoin/haskoin-core
-      commit: 1c5f0607f123d4f4361e58db082563aad5034beb
-    extra-dep: true
-  - location:
-      git: git://github.com/bitnomial/network-bitcoin
-      commit: f58f7ad68d8ae6601a80cff00e1937b9065184ab
-    extra-dep: true
 
 extra-deps:
-  - murmur3-1.0.3
-  - pbkdf-1.1.1.1
-  - secp256k1-haskell-0.1.4
-  - largeword-1.2.5
+  - git: git://github.com/bitnomial/network-bitcoin
+    commit: f58f7ad68d8ae6601a80cff00e1937b9065184ab
