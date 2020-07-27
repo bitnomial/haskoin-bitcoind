@@ -22,25 +22,23 @@ module Network.Bitcoin.Haskoin
     , inputAddress
     ) where
 
-import           Control.Monad               ((<=<))
-import qualified Data.ByteString.Base16      as B16
-import           Data.Maybe                  (fromMaybe)
-import           Data.Serialize              (decode)
-import           Data.Text.Encoding          as E
+import           Control.Monad          ((<=<))
+import qualified Data.ByteString.Base16 as B16
+import           Data.Maybe             (fromMaybe)
+import           Data.Serialize         (decode)
+import           Data.Text.Encoding     as E
 
-import           Network.Bitcoin             (Client, RawTransaction,
-                                              TransactionID, getClient,
-                                              getRawTransaction)
-import qualified Network.Bitcoin             as B
-import           Network.Haskoin.Address     (Address, addrToString,
-                                              inputAddress, outputAddress,
-                                              scriptToAddressBS, stringToAddr)
-import           Network.Haskoin.Constants   (Network)
-import           Network.Haskoin.Script      (decodeInputBS)
-import           Network.Haskoin.Transaction (OutPoint (..), Tx (..), TxHash,
-                                              TxIn, TxOut, hexToTxHash,
-                                              scriptInput, scriptOutput,
-                                              txHashToHex)
+import           Haskoin.Address        (Address, addrToString, inputAddress,
+                                         outputAddress, scriptToAddressBS,
+                                         stringToAddr)
+import           Haskoin.Constants      (Network)
+import           Haskoin.Script         (decodeInputBS)
+import           Haskoin.Transaction    (OutPoint (..), Tx (..), TxHash, TxIn,
+                                         TxOut, hexToTxHash, scriptInput,
+                                         scriptOutput, txHashToHex)
+import           Network.Bitcoin        (Client, RawTransaction, TransactionID,
+                                         getClient, getRawTransaction)
+import qualified Network.Bitcoin        as B
 
 
 transactionOutputAddress :: TxOut -> Either String Address

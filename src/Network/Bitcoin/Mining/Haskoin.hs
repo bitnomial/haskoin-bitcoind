@@ -3,13 +3,12 @@ module Network.Bitcoin.Mining.Haskoin
   , generateToAddress
   ) where
 
-import           Network.Bitcoin.Haskoin     (addressToHex,
-                                              transactionIdToTxHash)
-import qualified Network.Bitcoin.Mining      as NBM
-import           Network.Bitcoin.Wallet      (Client)
-import qualified Network.Haskoin.Address     as HSK
-import           Network.Haskoin.Constants   (Network)
-import           Network.Haskoin.Transaction (TxHash)
+import qualified Haskoin.Address         as HSK
+import           Haskoin.Constants       (Network)
+import           Haskoin.Transaction     (TxHash)
+import           Network.Bitcoin.Haskoin (addressToHex, transactionIdToTxHash)
+import qualified Network.Bitcoin.Mining  as NBM
+import           Network.Bitcoin.Wallet  (Client)
 
 
 generate :: Client -> Int -> Maybe Int -> IO [TxHash]

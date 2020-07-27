@@ -3,17 +3,17 @@ module Network.Bitcoin.Wallet.Haskoin
     , getNewAddress
     ) where
 
-import           Data.Fixed                  (Fixed (MkFixed))
-import           Data.Text                   (Text)
-import           Data.Word                   (Word64)
-import           Network.Bitcoin.Haskoin     (addressToHex, hexToAddress,
-                                              transactionIdToTxHash)
-import qualified Network.Bitcoin.Types       as NBT
-import           Network.Bitcoin.Wallet      (Client)
-import qualified Network.Bitcoin.Wallet      as W
-import qualified Network.Haskoin.Address     as HSK
-import           Network.Haskoin.Constants   (Network)
-import           Network.Haskoin.Transaction (TxHash)
+import           Data.Fixed              (Fixed (MkFixed))
+import           Data.Text               (Text)
+import           Data.Word               (Word64)
+import qualified Haskoin.Address         as HSK
+import           Haskoin.Constants       (Network)
+import           Haskoin.Transaction     (TxHash)
+import           Network.Bitcoin.Haskoin (addressToHex, hexToAddress,
+                                          transactionIdToTxHash)
+import qualified Network.Bitcoin.Types   as NBT
+import           Network.Bitcoin.Wallet  (Client)
+import qualified Network.Bitcoin.Wallet  as W
 
 
 type Satoshi = Word64

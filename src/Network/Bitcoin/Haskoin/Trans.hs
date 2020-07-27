@@ -34,19 +34,19 @@ module Network.Bitcoin.Haskoin.Trans
     , withClientIO
     ) where
 
-import           Control.Monad.Base          (MonadBase, liftBase)
+import           Control.Monad.Base      (MonadBase, liftBase)
 import           Control.Monad.IO.Class
-import           Control.Monad.Reader        (MonadReader, ReaderT (..), ask)
-import           Control.Monad.Trans         (MonadTrans (..))
-import           Data.ByteString             (ByteString)
+import           Control.Monad.Reader    (MonadReader, ReaderT (..), ask)
+import           Control.Monad.Trans     (MonadTrans (..))
+import           Data.ByteString         (ByteString)
 
-import           Network.Bitcoin             (Account)
-import           Network.Bitcoin.Haskoin     (Client)
-import qualified Network.Bitcoin.Haskoin     as B
-import           Network.Haskoin.Address     (Address)
-import           Network.Haskoin.Constants   (Network)
-import           Network.Haskoin.Transaction (OutPoint, Tx (..), TxHash,
-                                              TxIn (..), TxOut (..))
+import           Haskoin.Address         (Address)
+import           Haskoin.Constants       (Network)
+import           Haskoin.Transaction     (OutPoint, Tx (..), TxHash, TxIn (..),
+                                          TxOut (..))
+import           Network.Bitcoin         (Account)
+import           Network.Bitcoin.Haskoin (Client)
+import qualified Network.Bitcoin.Haskoin as B
 
 
 data BitcoindClient = BitcoindClient
