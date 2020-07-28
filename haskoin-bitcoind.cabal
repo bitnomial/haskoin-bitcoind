@@ -1,5 +1,5 @@
 name:                haskoin-bitcoind
-version:             0.4.2
+version:             0.5.0
 synopsis:            An adapter for haskoin to network-bitcoin
 description:         An adapter for haskoin to network-bitcoin. You can call network-bitcoin functions with haskoin types.
 homepage:            haskoin.com
@@ -25,7 +25,7 @@ library
                , base16-bytestring   >= 0.1.1.6
                , bytestring          >= 0.10.6
                , cereal              >= 0.5 && < 0.6
-               , haskoin-core        >= 0.9.0
+               , haskoin-core        >= 0.15.0
                , monad-control       >= 0.1
                , mtl                 >= 2.2
                , network-bitcoin     >= 1.8.2

@@ -28,9 +28,9 @@ import           Data.Maybe             (fromMaybe)
 import           Data.Serialize         (decode)
 import           Data.Text.Encoding     as E
 
-import           Haskoin.Address        (Address, addrToString, inputAddress,
+import           Haskoin.Address        (Address, addrToText, inputAddress,
                                          outputAddress, scriptToAddressBS,
-                                         stringToAddr)
+                                         textToAddr)
 import           Haskoin.Constants      (Network)
 import           Haskoin.Script         (decodeInputBS)
 import           Haskoin.Transaction    (OutPoint (..), Tx (..), TxHash, TxIn,
@@ -50,11 +50,11 @@ transactionInputAddress net = maybe (Left "could not decode address") Right . in
 
 
 addressToHex :: Network -> Address -> B.Address
-addressToHex net = fromMaybe (error "Address encoding error") . addrToString net
+addressToHex net = fromMaybe (error "Address encoding error") . addrToText net
 
 
 hexToAddress :: Network -> B.Address -> Address
-hexToAddress net = fromMaybe (error "Unable to parse address") . stringToAddr net
+hexToAddress net = fromMaybe (error "Unable to parse address") . textToAddr net
 
 
 -- | TODO Catch bad decodes
